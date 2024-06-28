@@ -37,6 +37,8 @@ function generateCookieStr(cookieObject) {
 }
 
 async function logIn(email, passwd) {
+  console.log("Loging in...");
+
   let formData = new FormData();
   formData.append("host", host);
   formData.append("email", email);
@@ -50,6 +52,10 @@ async function logIn(email, passwd) {
   });
 
   let rawCookie = response.headers.get("set-cookie");
+
+  let responseJson = await response.json();
+
+  responseJson && console.log(responseJson.msg);
 
   return parseCookie(rawCookie);
 }
