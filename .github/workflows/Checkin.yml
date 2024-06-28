@@ -10,7 +10,8 @@ jobs:
     runs-on: ubuntu-latest
     environment: IKUUU
     env:
-      COOKIE: ${{ secrets.COOKIE }}
+      EMAIL: ${{ secrets.EMAIL }}
+      PASSWD: ${{ secrets.PASSWD }}
 
     strategy:
       matrix:
