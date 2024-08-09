@@ -1,6 +1,7 @@
+const protocolPrefix = "https://";
 const host = "ikuuu.pw";
-const logInUrl = `https://${host}/auth/login`;
-const checkInUrl = `https://${host}/user/checkin`;
+const logInUrl = `${protocolPrefix}${host}/auth/login`;
+const checkInUrl = `${protocolPrefix}${host}/user/checkin`;
 
 function parseCookie(rawCookie) {
   let cookieSets = rawCookie.split("path=/,");
