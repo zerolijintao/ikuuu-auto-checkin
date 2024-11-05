@@ -1,5 +1,6 @@
+const host = process.env.HOST || "ikuuu.one";
+
 const protocolPrefix = "https://";
-const host = "ikuuu.pw";
 const logInUrl = `${protocolPrefix}${host}/auth/login`;
 const checkInUrl = `${protocolPrefix}${host}/user/checkin`;
 
