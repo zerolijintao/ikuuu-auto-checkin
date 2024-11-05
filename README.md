@@ -12,4 +12,4 @@
 
 - **Environments**: `IKUUU`
 - **Secrets**:`EMAIL`, `PASSWD`, `HOST`
-- 由于 ikuuu 经常更换域名，添加 HOST 环境变量，默认为`ikuuu.one`。若域名更改，修改 HOST 的值为对应域名即可即可。
+- 由于 ikuuu 经常更换域名，添加 HOST 环境变量，默认为`ikuuu.one`。若域名更改，修改 HOST 的值为对应域名即可。
