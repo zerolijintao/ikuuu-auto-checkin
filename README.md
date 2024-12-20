@@ -1,6 +1,6 @@
 ## iKuuu 定时自动签到
 
-[![文档](https://img.shields.io/badge/文档-blue)](https://ewigl.github.io/notes/posts/202410/github-actions/)
+[![文档](https://img.shields.io/badge/文档-blue)](https://ewigl.github.io/notes/posts/programming/github-actions/)
 
 ### 使用
 
