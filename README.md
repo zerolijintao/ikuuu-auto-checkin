@@ -4,11 +4,19 @@
 
 [![IKUUU-Auto-Checkin](https://github.com/ewigl/ikuuu-auto-checkin/actions/workflows/Checkin.yml/badge.svg)](https://github.com/ewigl/ikuuu-auto-checkin/actions/workflows/Checkin.yml)
 
-### 环境变量
+### 仓库变量
 
-- **Environments**: `IKUUU`
+- **EMAIL**：邮箱。
+- **PASSWD**：密码。
+- **HOST（可选）**：域名。
 
-- **Secrets**:`EMAIL`, `PASSWD`, `HOST`（可选）
+### 使用方法
+
+1. Fork 此仓库。
+2. 在 fork 后的仓库中启用 Actions。
+3. 配置仓库变量。
+
+详细文档: https://ewigl.github.io/notes/posts/programming/github-actions/
 
 ### 使用方法
 
