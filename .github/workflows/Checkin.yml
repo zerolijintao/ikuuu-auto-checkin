@@ -10,8 +10,8 @@ jobs:
     name: Checkin
     runs-on: ubuntu-latest
     env:
-      EMAIL: ${{ secrets.EMAIL }}
-      PASSWD: ${{ secrets.PASSWD }}
+      ACCOUNTS: ${{ secrets.ACCOUNTS }}
+      HOST: ${{ secrets.HOST }}
 
     steps:
       - uses: actions/checkout@v4
