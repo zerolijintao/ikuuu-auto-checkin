@@ -23,7 +23,7 @@ function formatCookie(rawCookieArray) {
 
 // 登录获取 Cookie
 async function logIn(account) {
-  console.log(`[${account.name}]: 登录中...`);
+  console.log(`【${account.name}】: 登录中...`);
 
   const formData = new FormData();
   formData.append("host", host);
@@ -46,7 +46,7 @@ async function logIn(account) {
   if (responseJson.ret !== 1) {
     throw new Error(`登录失败: ${responseJson.msg}`);
   } else {
-    console.log(`[${account.name}]: ${responseJson.msg}`);
+    console.log(`【${account.name}】: ${responseJson.msg}`);
   }
 
   let rawCookieArray = response.headers.getSetCookie();
@@ -71,7 +71,7 @@ async function checkIn(account) {
   }
 
   const data = await response.json();
-  console.log(`[${account.name}]: ${data.msg}`);
+  console.log(`【${account.name}】: ${data.msg}`);
 
   return data.msg;
 }
@@ -109,9 +109,9 @@ async function main() {
   results.forEach((result, index) => {
     const accountName = accounts[index].name;
     if (result.status === "fulfilled") {
-      console.log(`[${accountName}]: ✅ ${result.value}`);
+      console.log(`【${accountName}】: ✅ ${result.value}`);
     } else {
-      console.error(`[${accountName}]: ❌ ${result.reason.message}`);
+      console.error(`【${accountName}】: ❌ ${result.reason.message}`);
     }
   });
 }
