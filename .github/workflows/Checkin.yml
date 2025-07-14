@@ -48,7 +48,7 @@ jobs:
           token: ${{ secrets.TELEGRAM_TOKEN }}
           format: markdown
           message: |
-            *iKuuu 自动签到*
+            **iKuuu 自动签到**
 
             ${{ needs.checkin.outputs.result  }}
 
