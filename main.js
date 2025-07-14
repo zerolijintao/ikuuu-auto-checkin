@@ -1,5 +1,7 @@
 // 不直接使用 Cookie 是因为 Cookie 过期时间较短。
 
+import { appendFileSync } from "fs";
+
 const host = process.env.HOST || "ikuuu.one";
 
 const logInUrl = `https://${host}/auth/login`;
@@ -23,7 +25,7 @@ function formatCookie(rawCookieArray) {
 
 // 登录获取 Cookie
 async function logIn(account) {
-  console.log(`【${account.name}】: 登录中...`);
+  console.log(`${account.name}: 登录中...`);
 
   const formData = new FormData();
   formData.append("host", host);
@@ -46,7 +48,7 @@ async function logIn(account) {
   if (responseJson.ret !== 1) {
     throw new Error(`登录失败: ${responseJson.msg}`);
   } else {
-    console.log(`【${account.name}】: ${responseJson.msg}`);
+    console.log(`${account.name}: ${responseJson.msg}`);
   }
 
   let rawCookieArray = response.headers.getSetCookie();
@@ -71,7 +73,7 @@ async function checkIn(account) {
   }
 
   const data = await response.json();
-  console.log(`【${account.name}】: ${data.msg}`);
+  console.log(`${account.name}: ${data.msg}`);
 
   return data.msg;
 }
@@ -85,35 +87,52 @@ async function processSingleAccount(account) {
   return checkInResult;
 }
 
+function setGitHubOutput(name, value) {
+  appendFileSync(process.env.GITHUB_OUTPUT, `${name}<<EOF\n${value}\nEOF\n`);
+}
+
 // 入口
 async function main() {
   let accounts;
 
-  if (process.env.ACCOUNTS) {
-    try {
-      accounts = JSON.parse(process.env.ACCOUNTS);
-    } catch (error) {
-      console.log("❌ 账户信息配置格式错误。");
-      process.exit(1);
+  try {
+    if (!process.env.ACCOUNTS) {
+      throw new Error("❌ 未配置账户信息。");
     }
-  } else {
-    console.log("❌ 未配置账户信息。");
+
+    accounts = JSON.parse(process.env.ACCOUNTS);
+  } catch (error) {
+    const message = `❌ ${
+      error.message.includes("JSON") ? "账户信息配置格式错误。" : error.message
+    }`;
+    console.error(message);
+    setGitHubOutput("result", message);
     process.exit(1);
   }
 
   const allPromises = accounts.map((account) => processSingleAccount(account));
   const results = await Promise.allSettled(allPromises);
 
-  console.log(`\n======== 签到结果 ========\n`);
+  const msgHeader = "\n======== 签到结果 ========\n\n";
+  console.log(msgHeader);
 
-  results.forEach((result, index) => {
+  const resultLines = results.map((result, index) => {
     const accountName = accounts[index].name;
-    if (result.status === "fulfilled") {
-      console.log(`【${accountName}】: ✅ ${result.value}`);
-    } else {
-      console.error(`【${accountName}】: ❌ ${result.reason.message}`);
-    }
+
+    const isSuccess = result.status === "fulfilled";
+    const icon = isSuccess ? "✅" : "❌";
+    const message = isSuccess ? result.value : result.reason.message;
+
+    const line = `${accountName}: ${icon} ${message}`;
+
+    isSuccess ? console.log(line) : console.error(line);
+
+    return line;
   });
+
+  const resultMsg = resultLines.join("\n");
+
+  setGitHubOutput("result", resultMsg);
 }
 
 main();
