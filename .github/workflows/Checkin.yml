@@ -13,6 +13,8 @@ jobs:
     env:
       ACCOUNTS: ${{ secrets.ACCOUNTS }}
       HOST: ${{ secrets.HOST }}
+    outputs:
+      result: ${{ steps.checkin.outputs.result }}
 
     steps:
       - uses: actions/checkout@v4
@@ -23,6 +25,31 @@ jobs:
           node-version: latest
 
       - name: Checkin
+        id: checkin
         shell: bash
         run: |
           node main.js
+
+  telegram-notification:
+    name: Telegram Notification
+    runs-on: ubuntu-latest
+    if: always()
+    needs:
+      - checkin
+    env:
+      TELEGRAM_TOKEN: ${{ secrets.TELEGRAM_TOKEN }}
+      TELEGRAM_TO: ${{ secrets.TELEGRAM_TO }}
+
+    steps:
+      - name: Notify
+        uses: appleboy/telegram-action@master
+        with:
+          to: ${{ secrets.TELEGRAM_TO }}
+          token: ${{ secrets.TELEGRAM_TOKEN }}
+          format: markdown
+          message: |
+            *iKuuu 自动签到*
+
+            ${{ needs.checkin.outputs.result  }}
+
+            任务详情: https://github.com/${{ github.repository }}/actions/runs/${{ github.run_id }}
