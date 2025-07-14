@@ -1,6 +1,6 @@
 ## iKuuu 定时自动签到
 
-> 利用 Github Actions 定时任务实现自动签到，支持多个账户同时签到。
+> 利用 Github Actions 实现自动签到，支持多账户，支持 Telegram 通知。
 
 [![IKUUU-Auto-Checkin](https://github.com/ewigl/ikuuu-auto-checkin/actions/workflows/Checkin.yml/badge.svg)](https://github.com/ewigl/ikuuu-auto-checkin/actions/workflows/Checkin.yml)
 
@@ -23,7 +23,9 @@
   ]
   ```
 
-- **HOST**：（可选）iKuuu 的域名，不设置时默认为 `ikuuu.one`。
+- **HOST**: （可选）iKuuu 的域名，不设置时默认为 `ikuuu.one`。
+- **TELEGRAM_TOKEN**: （可选）Telegram 通知的 Bot Token。
+- **TELEGRAM_TO**: （可选）Telegram 通知的 Chat ID。
 
 ### 使用方法
 
